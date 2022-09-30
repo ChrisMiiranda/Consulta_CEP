@@ -30,3 +30,27 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+
+  assets:
+    - assets/images/background-map.png
+
+
+  fonts:
+    - family: FormulaCondensed
+      fonts:
+          - asset: assets/fonts/formulaCondensed/FormulaCondensed-Regular.ttf
+            weight: 400
+          - asset: assets/fonts/formulaCondensed/FormulaCondensed-Black.ttf
+            weight: 900
+          - asset: assets/fonts/formulaCondensed/FormulaCondensed-Bold.ttf
+            weight: 700
+          - asset: assets/fonts/formulaCondensed/FormulaCondensed-Light.ttf
+          - asset: assets/fonts/formulaCondensed/FormulaCondensed-Ultralight.ttf
+    - family: MonumentExtended
+      fonts:
+            - asset: assets/fonts/monumentExtended/MonumentExtended-Regular.ttf
+            - asset: assets/fonts/monumentExtended/MonumentExtended-Bold.ttf
+            - asset: assets/fonts/monumentExtended/MonumentExtended-Light.ttf
+            - asset: assets/fonts/monumentExtended/MonumentExtended-Regular.ttf
+            - asset: assets/fonts/monumentExtended/MonumentExtended-Ultrabold.ttf
+            - asset: assets/fonts/monumentExtended/MonumentExtended-Ultralight.ttf

@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Consulta CEP',
       theme: ThemeData(
+        fontFamily: 'MonumentExtended',
         scaffoldBackgroundColor: Colors.black,
         colorScheme: ColorScheme.fromSwatch().copyWith(
           primary: const Color(0xFF503CC8),

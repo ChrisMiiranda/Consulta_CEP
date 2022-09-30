@@ -7,11 +7,8 @@ class CepScreen extends StatelessWidget {
   const CepScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Consultar CEP'),
-      ),
-      body: const CepBody(),
+    return const Scaffold(
+      body: CepBody(),
     );
   }
 }
