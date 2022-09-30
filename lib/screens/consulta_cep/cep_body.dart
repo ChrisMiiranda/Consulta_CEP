@@ -41,92 +41,88 @@ class _CepBodyState extends State<CepBody> {
   Widget build(BuildContext context) {
     return Form(
       key: formKeys[0],
-      child: Padding(
-        padding:
-            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/background-map.png"),
-              opacity: .5,
-              fit: BoxFit.cover,
-            ),
+      child: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/background-map.png"),
+            opacity: .5,
+            fit: BoxFit.cover,
           ),
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 120),
-              child: Column(
-                children: [
-                  const Text('Seja Bem Vindo\nCarlos!',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          letterSpacing: .5,
-                          fontWeight: FontWeight.w300)),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.12),
-                  SizedBox(
-                    width: 290,
-                    child: buildCEPFormField(),
-                  ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-                  SizedBox(
-                    width: 290,
-                    height: MediaQuery.of(context).size.height * 0.056,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF503CC8),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40)),
-                      ),
-                      onPressed: () {
-                        if (formKeys[0].currentState!.validate()) {
-                          _futureCep = _buscarCep();
-                          showModalBottomSheet<void>(
-                            isScrollControlled: true,
-                            context: context,
-                            backgroundColor: Colors.transparent,
-                            builder: (BuildContext context) {
-                              return _listCamposEndereco();
-                            },
-                          );
-                        }
-                      },
-                      child: const Text(
-                        'Confirmar',
-                        style: TextStyle(
-                          fontFamily: "FormulaCondensed",
-                          letterSpacing: 1.5,
-                          fontSize: 20,
-                        ),
-                      ),
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                const Text('Seja Bem Vindo\nCarlos!',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        letterSpacing: .5,
+                        fontWeight: FontWeight.w300)),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.16),
+                SizedBox(
+                  width: 290,
+                  child: buildCEPFormField(),
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                SizedBox(
+                  width: 290,
+                  height: MediaQuery.of(context).size.height * 0.056,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF503CC8),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40)),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 30),
-                    child: SizedBox(
-                      child: MaterialButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(35),
-                            side: const BorderSide(
-                                color: Color(0xFF503CC8), width: 2),
-                          ),
-                          color: Colors.transparent,
-                          onPressed: () {
-                            null;
+                    onPressed: () {
+                      if (formKeys[0].currentState!.validate()) {
+                        _futureCep = _buscarCep();
+                        showModalBottomSheet<void>(
+                          isScrollControlled: true,
+                          context: context,
+                          backgroundColor: Colors.transparent,
+                          builder: (BuildContext context) {
+                            return _listCamposEndereco();
                           },
-                          child: const Text(
-                            'Histórico de Pesquisas',
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                                fontFamily: "FormulaCondensed",
-                                letterSpacing: 1.5),
-                          )),
+                        );
+                      }
+                    },
+                    child: const Text(
+                      'Confirmar',
+                      style: TextStyle(
+                        fontFamily: "FormulaCondensed",
+                        letterSpacing: 1.5,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
-                ],
-              ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 30),
+                  child: SizedBox(
+                    child: MaterialButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(35),
+                          side: const BorderSide(
+                              color: Color(0xFF503CC8), width: 2),
+                        ),
+                        color: Colors.transparent,
+                        onPressed: () {
+                          null;
+                        },
+                        child: const Text(
+                          'Histórico de Pesquisas',
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontFamily: "FormulaCondensed",
+                              letterSpacing: 1.5),
+                        )),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -406,9 +402,9 @@ class _CepBodyState extends State<CepBody> {
                                               width: 2),
                                         ),
                                         color: Colors.transparent,
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                          formKeys[0].currentState?.reset();
+                                        onPressed: () => {
+                                          Navigator.pop(context),
+                                          _cep.text = '',
                                         },
                                         child: const Text(
                                           'Voltar',
