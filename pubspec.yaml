@@ -1,0 +1,32 @@
+name: consulta_cep
+description: A new Flutter project.
+
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.0 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  search_cep: ^4.0.1
+  brasil_fields: ^1.4.1
+  map_launcher: ^2.4.0
+  url_launcher: ^6.1.5
+  flutter_svg:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+
+flutter:
+
+  uses-material-design: true
