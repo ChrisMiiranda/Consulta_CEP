@@ -99,7 +99,7 @@ class _CepBodyState extends State<CepBody> {
 
   TextFormField buildCEPFormField() {
     return TextFormField(
-      scrollPadding: const EdgeInsets.all(101),
+      scrollPadding: const EdgeInsets.all(100),
       textInputAction: TextInputAction.done,
       controller: _cep,
       keyboardType:
