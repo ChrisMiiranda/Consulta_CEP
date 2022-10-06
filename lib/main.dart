@@ -1,3 +1,4 @@
+import 'package:consulta_cep/routes.dart';
 import 'package:consulta_cep/screens/consulta_cep/cep_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
         ),
         // primarySwatch: Color(0xFF00BCD4),
       ),
-      home: CepScreen(),
+      home: const CepScreen(),
+      routes: routes,
     );
   }
 }

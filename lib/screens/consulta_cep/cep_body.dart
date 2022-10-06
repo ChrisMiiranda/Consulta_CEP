@@ -1,11 +1,15 @@
 import 'dart:io';
 
 import 'package:brasil_fields/brasil_fields.dart';
+import 'package:consulta_cep/components/alert.dart';
 import 'package:consulta_cep/components/input_decoration_custom.dart';
 import 'package:consulta_cep/components/input_style.dart';
+import 'package:consulta_cep/models/Historico.dart';
+import 'package:consulta_cep/screens/historico/historico_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:search_cep/search_cep.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CepBody extends StatefulWidget {
@@ -27,6 +31,7 @@ class _CepBodyState extends State<CepBody> {
   final _bairro = TextEditingController();
   final _cidade = TextEditingController();
   final _estado = TextEditingController();
+  final List<Historico>? ceps = [];
 
   String? cep;
   String? complemento;
@@ -110,7 +115,8 @@ class _CepBodyState extends State<CepBody> {
                         ),
                         color: Colors.transparent,
                         onPressed: () {
-                          null;
+                          Navigator.pushNamed(context, HistoricoScreen.routeName,
+                              arguments: ceps);
                         },
                         child: const Text(
                           'Histórico de Pesquisas',
@@ -132,6 +138,7 @@ class _CepBodyState extends State<CepBody> {
 
   TextFormField buildCEPFormField() {
     return TextFormField(
+      autofocus: false,
       scrollPadding: const EdgeInsets.all(100),
       textInputAction: TextInputAction.done,
       controller: _cep,
@@ -179,7 +186,7 @@ class _CepBodyState extends State<CepBody> {
 
   TextFormField buildNumCasaFormField(endereco) {
     return TextFormField(
-      autofocus: (endereco == null || endereco == "") ? false : true,
+      autofocus: false,
       controller: _numCasa,
       textInputAction: TextInputAction.next,
       keyboardType:
@@ -288,6 +295,13 @@ class _CepBodyState extends State<CepBody> {
           );
         }
         var cepInfos = snapshot.data;
+        if(cepInfos == "CEP inexistente.") {
+          Future.delayed(Duration.zero, () {
+            Navigator.pop(context);
+            return alertOK(context, "Erro ao buscar CEP. Certifique-se de que você digitou corretamente.");
+          });
+          return Container();
+        }
         return Form(
           key: formKeys[1],
           child: Padding(
@@ -403,9 +417,10 @@ class _CepBodyState extends State<CepBody> {
                                         ),
                                         color: Colors.transparent,
                                         onPressed: () => {
-                                          Navigator.pop(context),
-                                          _cep.text = '',
-                                        },
+                                              Navigator.pop(context),
+                                              _cep.text = '',
+                                              _numCasa.text = '',
+                                            },
                                         child: const Text(
                                           'Voltar',
                                           style: TextStyle(
@@ -449,6 +464,7 @@ class _CepBodyState extends State<CepBody> {
                                                     '+-+' +
                                                     cep!.replaceAll('.', ''))
                                                 .trim();
+                                        saveCepListValue(url);
                                         _launchUrl(Uri.parse(url));
                                       }),
                                 ],
@@ -470,13 +486,21 @@ class _CepBodyState extends State<CepBody> {
     final viaCepSearchCep = ViaCepSearchCep();
     final infoCepJSON = await viaCepSearchCep.searchInfoByCep(
         cep: cep!.replaceAll('.', '').replaceAll('-', ''));
-    return infoCepJSON.fold((_) => null, (data) => data);
+    if(infoCepJSON.fold((_) => null, (data) => data) == null) {
+      return infoCepJSON.fold((l) => l.errorMessage, (r) => r);
+    } else {
+      return infoCepJSON.fold((_) => null, (data) => data);
+    }
   }
 
   Future<void> _launchUrl(Uri url) async {
-    print(url);
     if (!await launchUrl(url)) {
       throw 'Could not launch $url';
     }
+  }
+
+  saveCepListValue(url) {
+    ceps?.add(Historico(_cep.text, _endereco.text, _numCasa.text, _bairro.text,
+        _cidade.text, _estado.text, url));
   }
 }
